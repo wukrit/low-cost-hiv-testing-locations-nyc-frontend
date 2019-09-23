@@ -82,6 +82,10 @@ const createLocationModal = (promise) => {
 	locationModal.classList.add("modal")
 	const modalContent = document.createElement("div")
 	modalContent.classList.add("modal-content")
+	const modalText = document.createElement("div")
+	modalText.classList.add("modal-text")
+	const modalMap = document.createElement("div")
+	modalMap.classList.add("modal-map")
 
 	const siteName = document.createElement("h2")
 	const sitePhoneNumber = document.createElement("p")
@@ -100,7 +104,18 @@ const createLocationModal = (promise) => {
 		borough.innerText = `Borough: ${propertyIsDefined(locationObj, "borough")}`
 		free.innerText = `Free Testing Offered: ${propertyIsDefined(locationObj, "free")}`
 
-		modalContent.append(siteName, sitePhoneNumber, free, siteAddress1,  siteAddress2, siteZip, borough)
+
+		modalMap.innerHTML = `<iframe
+		  width="100%"
+		  height="400"
+		  frameborder="0" style="border:0"
+		  src="https://www.google.com/maps/embed/v1/place?key=${gApiKey}&q=${locationObj.site_name.replace(" ", "+")}" allowfullscreen>
+		</iframe>`
+
+		const reviewSection = createReviewSection(locationObj.site_id)
+
+		modalText.append(siteName, sitePhoneNumber, free, siteAddress1,  siteAddress2, siteZip, borough)
+		modalContent.append(modalText, modalMap, reviewSection)
 		locationModal.append(modalContent)
 
 		document.body.append(locationModal)
@@ -110,4 +125,19 @@ const createLocationModal = (promise) => {
 		  }
 		})
 	})
+}
+
+const createReviewSection = siteId => {
+	const reviewSection = document.createElement("div")
+	reviewSection.classList.add("reviews")
+
+	const star = document.createElement("span")
+	star.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`
+	const thumbsUp = document.createElement("span")
+	thumbsUp.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>`
+	const thumbsDown = document.createElement("span")
+	thumbsDown.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-down"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>`
+
+	reviewSection.append(star, thumbsUp, thumbsDown)
+	return reviewSection
 }

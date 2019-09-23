@@ -1,27 +1,42 @@
+/* Main Container */
+main {
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Table Formatting */
+.table-container {
+  overflow: auto;
+  max-height: 500px;
+}
+
 #site-table {
-    border: solid 1px #DDEEEE;
-    border-collapse: collapse;
-    border-spacing: 0;
-    font: normal 13px Arial, sans-serif;
+  border: solid 1px #DDEEEE;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font: normal 13px Arial, sans-serif;
 }
 #site-table thead th {
-    background-color: #DDEFEF;
-    border: solid 1px #DDEEEE;
-    color: #336B6B;
-    padding: 10px;
-    text-align: left;
-    text-shadow: 1px 1px 1px #fff;
+  position: sticky;
+  top: 0;
+  background-color: #DDEFEF;
+  border: solid 1px #DDEEEE;
+  color: #336B6B;
+  padding: 10px;
+  text-align: left;
+  text-shadow: 1px 1px 1px #fff;
 }
 #site-table tbody td {
-    border: solid 1px #DDEEEE;
-    color: #333;
-    padding: 10px;
-    text-shadow: 1px 1px 1px #fff;
+  border: solid 1px #DDEEEE;
+  color: #333;
+  padding: 10px;
+  text-shadow: 1px 1px 1px #fff;
 }
 
 /* Modals */
 .modal {
-  display: block;
+  display: flex;
   position: fixed;
   z-index: 1;
   left: 0;
@@ -33,10 +48,33 @@
   background-color: rgba(0,0,0,0.4);
 }
 .modal-content {
+  display: inline-flex;
   background-color: #fefefe;
-  margin: 15% auto;
+  margin: auto;
+  left: auto;
+  right: auto;
   padding: 20px;
   border: 1px solid #888;
   border-radius: 5px;
   width: 80%;
+  height: 80%;
+  justify-content: center;
+}
+.modal-text {
+  width: 50%;
+  display: inline-block;
+  align-self: stretch;
+  justify-content: center;
+}
+.modal-map {
+  width: 50%;
+  display: inline-block;
+  justify-content: center;
+}
+.reviews {
+  display: block;
+}
+
+.reviews svg:hover {
+  fill: pink;
 }
