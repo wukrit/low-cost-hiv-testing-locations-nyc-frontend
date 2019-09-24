@@ -51,7 +51,9 @@ const handleTrClick = (e) => {
 const handleThumb = () => {
 	const location = document.querySelector(".modal-site-name")
 	const site_id = location.id.substr(12)
-	if (event.target.classList.contains("thumbs-up") && !(event.target.classList.contains("filled")) && event.target.tagName === "path") {
+	localStorage[site_id] = localStorage[site_id] || JSON.stringify({starred: false, voted: false}) 
+	if (event.target.classList.contains("thumbs-up") && !(event.target.classList.contains("filled")) && event.target.tagName === "path" && !checkLocalStorageObj(site_id, "voted")) {
+		
 		fetch(thumbsUrl, {
 			method: "POST",
 			headers: {
@@ -60,12 +62,13 @@ const handleThumb = () => {
 			},
 			body: JSON.stringify({site_id: site_id, up: true})
 		})
+		setLocalStorageObj(site_id, "voted", true)
+
 		event.target.classList.add("filled")
 		const count = event.target.parentElement.nextElementSibling
 		const countFloat = parseFloat(count.innerText) + 1
 		count.innerText = countFloat
-	} else if (event.target.classList.contains("thumbs-down") && !(event.target.classList.contains("filled")) && event.target.tagName === "path") {
-		event.target.classList.add("filled")
+	} else if (event.target.classList.contains("thumbs-down") && !(event.target.classList.contains("filled")) && event.target.tagName === "path" && !checkLocalStorageObj(site_id, "voted")) {
 		fetch(thumbsUrl, {
 			method: "POST",
 			headers: {
@@ -74,10 +77,15 @@ const handleThumb = () => {
 			},
 			body: JSON.stringify({site_id: site_id, up: false})
 		})
+		setLocalStorageObj(site_id, "voted", true)
+
+		event.target.classList.add("filled")
 		const count = event.target.parentElement.nextElementSibling
 		const countFloat = parseFloat(count.innerText) + 1
 		count.innerText = countFloat
-	} else if (event.target.classList.contains("star") && !(event.target.classList.contains("filled")) && event.target.tagName === "polygon") {
+	} else if (event.target.classList.contains("star") && !(event.target.classList.contains("filled")) && event.target.tagName === "polygon" && !checkLocalStorageObj(site_id, "starred")) {
+		setLocalStorageObj(site_id, "starred", true)
+
 		event.target.classList.add("filled")
 		const count = event.target.parentElement.nextElementSibling
 		const countFloat = parseFloat(count.innerText) + 1
@@ -210,4 +218,16 @@ const createReviewSection = siteId => {
 
 	reviewSection.append(reviewHeader, star, thumbsUp, thumbsDown)
 	return reviewSection
+}
+
+// Local Storage Helpers
+const setLocalStorageObj = (obj, key, value) => {
+	let ls = JSON.parse(localStorage[obj])
+	ls[key] = value
+	localStorage[obj] = JSON.stringify(ls)
+}
+
+const checkLocalStorageObj = (obj, key) => {
+	let ls = JSON.parse(localStorage[obj])
+	return ls[key]
 }
