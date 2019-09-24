@@ -32,6 +32,7 @@ main {
   color: #333;
   padding: 10px;
   text-shadow: 1px 1px 1px #fff;
+
 }
 
 /* Modals */
@@ -48,28 +49,30 @@ main {
   background-color: rgba(0,0,0,0.4);
 }
 .modal-content {
-  display: inline-flex;
+  display: block;
   background-color: #fefefe;
   margin: auto;
-  left: auto;
-  right: auto;
   padding: 20px;
   border: 1px solid #888;
   border-radius: 5px;
   width: 80%;
-  height: 80%;
+  height: auto;
   justify-content: center;
+}
+
+.modal-upper {
+  display: flex;
+  align-content: flex-start;
+
 }
 .modal-text {
   width: 50%;
   display: inline-block;
-  align-self: stretch;
-  justify-content: center;
 }
 .modal-map {
   width: 50%;
   display: inline-block;
-  justify-content: center;
+
 }
 .reviews {
   display: block;
@@ -77,4 +80,41 @@ main {
 
 .reviews svg:hover {
   fill: pink;
+}
+
+.reviews .filled {
+  fill: pink;
+}
+
+.thumb-count {
+  font-size: large;
+  padding: 10px;
+}
+
+/* For Smaller Displays */
+@media only screen and (max-width: 1000px) {
+  body {
+    font-size: large;
+  }
+  .modal-content {
+    display: block;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 5px;
+    width: 90%;
+    height: auto;
+  }
+  .modal-upper {
+    display: block;
+  }
+  .modal-text {
+    width: 100%;
+    display: block;
+  }
+  .modal-map {
+    width: 100%;
+    display: block;
+  } 
 }
